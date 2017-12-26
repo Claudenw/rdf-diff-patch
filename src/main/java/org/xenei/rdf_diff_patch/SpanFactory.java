@@ -1,5 +1,9 @@
 package org.xenei.rdf_diff_patch;
 
+/**
+ * A factory to create spans.
+ *
+ */
 public class SpanFactory
 {
 
@@ -15,18 +19,26 @@ public class SpanFactory
 	public static Span fromEnd(int start, int end) {
 		return new SpanImpl(start, end - start + 1);
 	}
-	
+
+	/**
+	 * Create a span from a starting position and a length.
+	 * @param start the starting position.
+	 * @param length the length.
+	 * @return the new Span.
+	 */
 	public static Span fromLength(int start, int length) {
 		return new SpanImpl(start, length);
 	}
-	
-	
+
+
+	/**
+	 * An implementation of Span for factory use.
+	 *
+	 */
 	private static class SpanImpl extends AbstractSpan {
 
 		private final int start;
 		private final int length;
-
-		
 
 		/**
 		 * Constructor using a starting position and a length. To construct using a

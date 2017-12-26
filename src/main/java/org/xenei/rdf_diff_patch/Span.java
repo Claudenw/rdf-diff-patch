@@ -1,7 +1,10 @@
 package org.xenei.rdf_diff_patch;
 
 /**
- * Describes a span of data. Starting point and ending point.
+ * Describes a span of data. 
+ * 
+ * Includes the starting point, ending point, length and methods to determine
+ * if points are within the span or spans overlap.
  *
  */
 public interface Span {
@@ -171,7 +174,7 @@ public interface Span {
 			return start + increment;
 		}
 
-		
+
 		/**
 		 * create the default string for the span.
 		 * @param span The span to get the string for
@@ -180,10 +183,17 @@ public interface Span {
 		public static String toString(Span span)
 		{
 			return String.format("%s[%s,%s]", span.getClass().getName(), span.getStart(), span.getLength() > 0 ? span.getEnd()
-						: "-empty-");
-			
+					: "-empty-");
+
 		}
-		
+
+		/**
+		 * Given a span returns the position in absolute positioning.
+		 * (e.g. pos-span.start )
+		 * @param span the span to calcualte with.
+		 * @param pos the position.
+		 * @return the absolute position of the span.
+		 */
 		public static int positionOf( Span span,  int pos )
 		{
 			return pos-span.getStart();

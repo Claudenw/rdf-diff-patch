@@ -15,17 +15,17 @@ import org.junit.Test;
 import difflib.Patch;
 
 
-public class FactoryTest
+public class FactoryTestWithModels
 {
 	
 	protected void testPatch(Model orig, Model revised)
 	{
 		final RDFConnection origC = RDFConnectionFactory.connect( DatasetFactory.create(orig));
 		final RDFConnection revC = RDFConnectionFactory.connect( DatasetFactory.create(revised));
-		UpdateFactory updateFactory = new UpdateFactory();
+		
 
-		final Patch<Quad> patch = Factory.patch(origC, revC);
-		final UpdateRequest req= updateFactory.asUpdate(patch);
+		final Patch<Quad> patch = PatchFactory.patch(origC, revC);
+		final UpdateRequest req= UpdateFactory.asUpdate(patch);
 		
 		origC.update(req);
 		
@@ -54,6 +54,19 @@ public class FactoryTest
 	public void testSimplePatchWithBlankNode() {
 		String initModelA = "s p _:a ; _:a p o; _:a p2 o2 ";
 		String initModelB = "s p _:b ; _:b p o; _:b p2 o3 ";
+
+		final Model orig = ModelHelper.modelAdd( ModelFactory.createDefaultModel(), initModelA);
+		final Model revised = ModelHelper.modelAdd( ModelFactory.createDefaultModel(), initModelB);
+
+		testPatch( orig, revised );
+		
+		
+	}
+	
+	@Test
+	public void testPatchWithBlankNodeAndExtra() {
+		String initModelA = "s p o4;s p _:a ; _:a p o; _:a p2 o2 ";
+		String initModelB = "s2 p o4;s p _:b ; _:b p o; _:b p2 o3 ";
 
 		final Model orig = ModelHelper.modelAdd( ModelFactory.createDefaultModel(), initModelA);
 		final Model revised = ModelHelper.modelAdd( ModelFactory.createDefaultModel(), initModelB);
