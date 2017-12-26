@@ -28,7 +28,7 @@ public class Factory
 	private final static Var P = Var.alloc("p"); 
 	private final static Var O = Var.alloc("o"); 
 
-	public static RdfPatch patch( RDFConnection orig, RDFConnection revised)
+	public static Patch<Quad> patch( RDFConnection orig, RDFConnection revised)
 	{
 		
 		Function<QuerySolution, Quad> toQuad = new Function<QuerySolution, Quad>(){
@@ -53,8 +53,7 @@ public class Factory
 		List<Quad> revQ = WrappedIterator.create(revised.query(outer.build()).execSelect())
 				.mapWith( toQuad ).toList();		
 				
-		Patch<Quad> patch = DiffUtils.diff(origQ, revQ, new MyersDiff<Quad>());
-		return new RdfPatch(patch);
+		return DiffUtils.diff(origQ, revQ, new MyersDiff<Quad>());		
 	}
 	
 	
