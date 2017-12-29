@@ -158,13 +158,11 @@ public class UpdateFactory {
         if (blanks.isEmpty()) {
             lst.addAll( chunk.getLines() );
         } else {
-            final AddBlankMapper mapper = new AddBlankMapper( blanks );
-
+            
             for (final List<Quad> qLst : byGraph( chunk )) {
                 final UpdateBuilder mod = new UpdateBuilder();
 
                 WrappedIterator.create( qLst.iterator() )
-                .mapWith( q -> new Quad( q.getGraph(), mapper.apply( q.asTriple() ) ) )
                 .forEachRemaining( t -> mod.addInsert( t ) );
 
                 req.add( mod.build() );
@@ -238,52 +236,19 @@ public class UpdateFactory {
         }
     }
 
-    /**
-     * Converts blank nodes into blanks with consistent numbering for add
-     * operations.
-     * 
-     * TODO determine if this is necessary. All it does is map one blank id onto
-     * another blank id.
-     */
-    private static class AddBlankMapper extends DeleteBlankMapper {
-        /**
-         * Constructor
-         * 
-         * @param blanks
-         *            the list of blank nodes in the operation.
-         */
-        AddBlankMapper(List<Node> blanks) {
-            super( blanks );
-        }
+    
 
-        /**
-         * Map the node to the new blank name.
-         * 
-         * Returns variables indexed to the blank node position in the list.
-         * 
-         * @param node
-         *            the node to map.
-         * @return if node is not blank return it otherwise return a variable.
-         */
-        @Override
-        Node map(Node node) {
-            if (node.isBlank()) {
-                return NodeFactory.createBlankNode( "_:" + blanks.indexOf( node ) );
-            }
-            return node;
-        }
-    }
-
-    /* chunk lists are always in order */
+    
     /**
      * Extract a list of lists of quads where each inner list is a separate
      * graph.
-     * 
+     *  
      * @param chunk
      *            the chunk to split by graph.
      * @return the list of lists of quads.
      */
     private static List<List<Quad>> byGraph(Chunk<Quad> chunk) {
+        /* chunk lists are always in order */
         if (chunk.size() == 0) {
             return Collections.emptyList();
         }
