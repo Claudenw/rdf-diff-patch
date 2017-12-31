@@ -159,12 +159,11 @@ public class UpdateFactory {
         if (blanks.isEmpty()) {
             lst.addAll( chunk.getLines() );
         } else {
-            
+
             for (final List<Quad> qLst : byGraph( chunk )) {
                 final UpdateBuilder mod = new UpdateBuilder();
 
-                WrappedIterator.create( qLst.iterator() )
-                .forEachRemaining( t -> mod.addInsert( t ) );
+                WrappedIterator.create( qLst.iterator() ).forEachRemaining( t -> mod.addInsert( t ) );
 
                 req.add( mod.build() );
             }
@@ -237,13 +236,10 @@ public class UpdateFactory {
         }
     }
 
-    
-
-    
     /**
      * Extract a list of lists of quads where each inner list is a separate
      * graph.
-     *  
+     * 
      * @param chunk
      *            the chunk to split by graph.
      * @return the list of lists of quads.

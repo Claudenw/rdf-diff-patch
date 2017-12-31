@@ -108,6 +108,7 @@ public class QuadList implements List<Quad> {
         if (c.isEmpty()) {
             return false;
         }
+        @SuppressWarnings("unchecked")
         final List<Quad> l = (c instanceof List) ? (List<Quad>) c : new ArrayList<Quad>( c );
 
         if (lst.isEmpty()) {
@@ -288,6 +289,7 @@ public class QuadList implements List<Quad> {
         return retval;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
         if (a.length < size()) {
@@ -339,7 +341,7 @@ public class QuadList implements List<Quad> {
         }
 
         @Override
-        public void forEachRemaining(Consumer action) {
+        public void forEachRemaining(Consumer<? super Quad> action) {
             if (iter == null) {
                 return;
             }
