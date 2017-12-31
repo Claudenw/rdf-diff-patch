@@ -187,8 +187,8 @@
 	<inceptionYear>2017</inceptionYear>
 	<scm>
 		<url>https://github.com/Claudenw/rdf-diff-patch.git</url>
-		<connection>git@github.com:Claudenw/rdf-diff-patch.git</connection>
-		<developerConnection>git@github.com:Claudenw/rdf-diff-patch.git</developerConnection>
+		<connection>scm:git@github.com:Claudenw/rdf-diff-patch.git</connection>
+		<developerConnection>scm:git@github.com:Claudenw/rdf-diff-patch.git</developerConnection>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
